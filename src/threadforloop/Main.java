@@ -1,25 +1,29 @@
+package threadforloop;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class MainTwo {
+public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        List<Thread> allThreads = new ArrayList<>();
 
         for (int i = 0; i < 100; ++i) {
             NumberPrinter numberPrinter = new NumberPrinter(i);
-            executorService.submit(numberPrinter);
-
-            if (i == 30) {
-                System.out.println("Wait");
-            }
+            Thread t = new Thread(numberPrinter);
+            allThreads.add(t);
+            t.start();
 
             // Create object of a class that implements Runnable
             // Create an object of Thread and pass the oobj of runnable to constructor
             // start the thread
         }
+
+        for (int i = 0; i < 100; ++i) {
+            allThreads.get(i).join();
+        }
+
+        System.out.println("All the numbers of printed");
     }
 }
 

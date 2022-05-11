@@ -1,3 +1,5 @@
+package threadforloop;
+
 public class NumberPrinter implements Runnable {
     private  int number;
 
